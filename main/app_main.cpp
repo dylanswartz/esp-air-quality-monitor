@@ -12,7 +12,7 @@
 #define TAG "golioth_espidf_arduino"
 
 // LED connection: LED_PIN--LED--Resistor--Ground
-#define LED_PIN 23
+#define LED_PIN 13
 
 // Current firmware version
 const char* _current_version = "1.0.0";
