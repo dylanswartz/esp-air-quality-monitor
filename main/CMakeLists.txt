@@ -1,5 +1,8 @@
 set(srcs
     "app_main.cpp"
+    "SeeedOLED.cpp"
+    "Seeed_BME280.cpp"
+    "Air_Quality_Sensor.cpp"
 )
 
 set(deps

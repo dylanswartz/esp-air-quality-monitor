@@ -8,14 +8,21 @@
 #include "golioth.h"
 
 #include "Arduino.h"
+#include "Wire.h"
+#include "SeeedOLED.h"
+#include "Air_Quality_Sensor.h"
+#include "Seeed_BME280.h"
+
 
 #define TAG "golioth_espidf_arduino"
 
 // LED connection: LED_PIN--LED--Resistor--Ground
 #define LED_PIN 13
+#define OLED_SCL 23
+#define OLED_SDA 22
 
 // Current firmware version
-const char* _current_version = "1.0.0";
+const char* _current_version = "1.0.4";
 
 // Configurable via Settings service, key = "LOOP_DELAY_S"
 int32_t _loop_delay_s = 10;
@@ -61,6 +68,15 @@ extern "C" void app_main(void) {
     Serial.println("IP address: ");
     Serial.println(WiFi.localIP());
 
+    // Lets make the OLED Display something: 
+    Wire.begin(OLED_SCL, OLED_SDA);
+    SeeedOled.init();  //initialze SEEED OLED display
+    SeeedOled.clearDisplay();          //clear the screen and set start position to top left corner
+    SeeedOled.setNormalDisplay();      //Set display to normal mode (i.e non-inverse mode)
+    SeeedOled.setPageMode();           //Set addressing mode to Page Mode
+    SeeedOled.setTextXY(0, 0);         //Set the cursor to Xth Page, Yth Column
+    SeeedOled.putString("Booting..."); //Print the String
+
     // Now we are ready to connect to the Golioth cloud.
     //
     // To start, we need to create a client. The function golioth_client_create will
@@ -86,21 +102,7 @@ extern "C" void app_main(void) {
 
     uint16_t counter = 0;
     Serial.println("This is where Arduino loop() functions happen");
-    // This while-loop is the equivalent of the Arduino Loop
-    while(1) {
-        digitalWrite(LED_PIN, counter%2);
-        Serial.print("Hello Golioth! #");
-        Serial.println(counter);
-        ++counter;
-        delay(1000);
-
-        if (counter > 10) {
-            Serial.println("Let's break this loop and try out some Golioth features.");
-            Serial.println();
-            break;
-        }
-    }
-
+    delay(1000); /// If I comment this out it bootloops 
     // Demonstrate Golioth Features
 
     // Register a callback function that will be called by the client task when
@@ -125,9 +127,22 @@ extern "C" void app_main(void) {
     // allows remote users to manage and push settings to devices.
     golioth_settings_register_int(client, "LOOP_DELAY_S", on_loop_delay_setting, NULL);
 
+    SeeedOled.clearDisplay();
+    SeeedOled.setTextXY(0, 0); 
+    SeeedOled.putString("Hello Golioth!");
+
     while(1) {
         // Send a log message to the server with the counter value
         GLTH_LOGI(TAG, "Counter value: %d", counter);
+
+        digitalWrite(LED_PIN, counter%2);
+
+        Serial.print("Hello Golioth! #");
+        Serial.println(counter);
+
+        SeeedOled.setTextXY(2, 0);
+        SeeedOled.putString("Count: ");
+        SeeedOled.putNumber(counter);
 
         // Send the most recent counter value to Golioth LightDB State
         golioth_lightdb_set_int_async(client, "counter", counter, NULL, NULL);
