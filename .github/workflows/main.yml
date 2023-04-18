@@ -32,3 +32,30 @@ jobs:
       with:
         name: firmware.bin
         path: build/esp-air-quality-monitor.bin
+  deploy:
+    if: ${{ github.event_name != 'pull_request' }}
+    needs: build
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Install goliothctl
+        run: |
+          echo "deb [trusted=yes] https://repos.golioth.io/apt/ /" | sudo tee /etc/apt/sources.list.d/golioth.list
+          sudo apt update
+          sudo apt install goliothctl
+      - name: Setup goliothctl
+        run: |
+          goliothctl login --apiKey ${{ secrets.GOLIOTH_API_KEY }} --projectId ${{ secrets.GOLIOTH_PROJECT_ID }}
+      - uses: actions/download-artifact@v3
+        with:
+          name: firmware.bin
+
+      - name: Get latest release version number
+        id: get_version
+        uses: battila7/get-version-action@v2
+
+      - name: Upload binary to Golioth (create artifact)
+        run: |
+          goliothctl dfu artifact create zephyr.bin --version ${{ steps.get_version.outputs.version-without-v }}
