@@ -27,3 +27,8 @@ jobs:
         WIFI_PASS: ${{ secrets.WIFI_PASS }}
         PSK_ID: ${{ secrets.PSK_ID }}
         PSK: ${{ secrets.PSK }}
+    - name: store built artifact
+      uses: actions/upload-artifact@v3
+      with:
+        name: firmware.bin
+        path: build/esp-air-quality-monitor.bin
