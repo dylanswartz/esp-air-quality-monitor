@@ -6,3 +6,5 @@ dependencies.lock
 .vscode
 *.key
 *.pem
+.DS_Store
+*/.DS_Store
