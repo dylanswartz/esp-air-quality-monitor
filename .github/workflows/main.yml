@@ -58,4 +58,4 @@ jobs:
 
       - name: Upload binary to Golioth (create artifact)
         run: |
-          goliothctl dfu artifact create firmware.bin --version ${{ steps.get_version.outputs.version-without-v }}
+          goliothctl dfu artifact create esp-air-quality-monitor/firmware.bin --version ${{ steps.get_version.outputs.version-without-v }}
