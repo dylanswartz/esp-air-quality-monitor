@@ -37,9 +37,12 @@ const int AirQualitySensor::FRESH_AIR      = 3;
 AirQualitySensor::AirQualitySensor(int pin)
     : _pin(pin), _voltageSum(0), _volSumCount(0) {
     // do nothing
+    Serial.print("Trying to intialize air quality sensor on pin: ");
+    Serial.println(pin);
 }
 
 bool AirQualitySensor::init(void) {
+    pinMode(_pin, INPUT);
     int initVoltage = analogRead(_pin);
 
     if (10 < initVoltage && initVoltage < 798) {

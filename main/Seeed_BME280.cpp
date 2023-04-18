@@ -1,12 +1,14 @@
 #include "Seeed_BME280.h"
 
+#define OLED_SCL 23
+#define OLED_SDA 22
+
 bool BME280::init(int i2c_addr) {
     uint8_t retry = 0;
     uint8_t chip_id = 0;
 
-
     _devAddr = i2c_addr;
-    Wire.begin();
+    Wire.begin(OLED_SCL, OLED_SDA);
 
     while ((retry++ < 5) && (chip_id != 0x60)) {
         chip_id = BME280Read8(BME280_REG_CHIPID);
