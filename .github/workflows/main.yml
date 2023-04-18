@@ -9,7 +9,6 @@ on:
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
 
     steps:
@@ -23,3 +22,8 @@ jobs:
         esp_idf_version: v4.4.4
         target: esp32
         path: './'
+      env:
+        WIFI_SSID: ${{ secrets.WIFI_SSID }}
+        WIFI_PASS: ${{ secrets.WIFI_PASS }}
+        PSK_ID: ${{ secrets.PSK_ID }}
+        PSK: ${{ secrets.PSK }}
