@@ -1,4 +1,4 @@
-name: Build Zephyr application
+name: Build with ESP-IDF
 
 on:
   push:
