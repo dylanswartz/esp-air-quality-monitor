@@ -2,6 +2,7 @@ build/
 sdkconfig
 sdkconfig.old
 credentials.h
+credentials.local.h
 dependencies.lock
 .vscode
 *.key

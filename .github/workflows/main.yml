@@ -9,7 +9,6 @@ on:
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
 
     steps:
@@ -20,6 +19,11 @@ jobs:
     - name: esp-idf build
       uses: espressif/esp-idf-ci-action@v1
       with:
-        esp_idf_version: v4.4
+        esp_idf_version: v4.4.4
         target: esp32
-        path: 'esp-air-quality-monitor'
+        path: './'
+      env:
+        WIFI_SSID: ${{ secrets.WIFI_SSID }}
+        WIFI_PASS: ${{ secrets.WIFI_PASS }}
+        PSK_ID: ${{ secrets.PSK_ID }}
+        PSK: ${{ secrets.PSK }}

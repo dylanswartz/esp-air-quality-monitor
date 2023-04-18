@@ -14,7 +14,7 @@
 #include "Seeed_BME280.h"
 
 
-#define TAG "golioth_espidf_arduino"
+#define TAG "esp-air-quality-monitor"
 
 // LED connection: LED_PIN--LED--Resistor--Ground
 #define LED_PIN 13
