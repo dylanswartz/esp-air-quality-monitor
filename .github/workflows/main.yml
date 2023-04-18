@@ -13,7 +13,7 @@ jobs:
 
     steps:
     - name: Checkout repo
-      uses: actions/checkout@v2
+      uses: actions/checkout@v3
       with:
         submodules: 'recursive'
     - name: esp-idf build
@@ -39,7 +39,6 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
-
       - name: Install goliothctl
         run: |
           echo "deb [trusted=yes] https://repos.golioth.io/apt/ /" | sudo tee /etc/apt/sources.list.d/golioth.list
@@ -51,6 +50,8 @@ jobs:
       - uses: actions/download-artifact@v3
         with:
           name: firmware.bin
+      - name: Test artifact download
+        run: ls -R 
 
       - name: Get latest release version number
         id: get_version
@@ -58,4 +59,4 @@ jobs:
 
       - name: Upload binary to Golioth (create artifact)
         run: |
-          goliothctl dfu artifact create esp-air-quality-monitor/firmware.bin --version ${{ steps.get_version.outputs.version-without-v }}
+          goliothctl dfu artifact create firmware.bin --version ${{ steps.get_version.outputs.version-without-v }}
