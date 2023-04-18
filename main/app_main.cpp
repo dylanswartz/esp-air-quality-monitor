@@ -46,7 +46,7 @@ void createEventPayload(golioth_client_t client, int temp, int humidity, int pre
 void updateDisplay(int temp, int humidity, int pressure, String airQuality);
 
 // Current firmware version
-const char* _current_version = "1.0.5";
+const char* _current_version = "1.1.0";
 
 // Configurable via Settings service, key = "LOOP_DELAY_S"
 int32_t _loop_delay_s = 10;

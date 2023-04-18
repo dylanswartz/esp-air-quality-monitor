@@ -60,3 +60,7 @@ jobs:
       - name: Upload binary to Golioth (create artifact)
         run: |
           goliothctl dfu artifact create esp-air-quality-monitor.bin --version ${{ steps.get_version.outputs.version-without-v }}
+
+      - name: Create release in Golioth (OTA update)
+        run: |
+          goliothctl dfu release create --components main@${{ steps.get_version.outputs.version-without-v }} --tags dev --rollout true
