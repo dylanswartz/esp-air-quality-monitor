@@ -12,6 +12,6 @@ include($ENV{IDF_PATH}/tools/cmake/project.cmake)
 project(esp-air-quality-monitor)
 configure_file(
   ${CMAKE_SOURCE_DIR}/credentials_template.h.in
-  ${CMAKE_SOURCE_DIR}/credentials.h
+  ${CMAKE_BINARY_DIR}/credentials.h
   @ONLY
 )
