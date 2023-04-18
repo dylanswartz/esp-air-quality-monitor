@@ -3,4 +3,4 @@ set(EXTRA_COMPONENT_DIRS ./third_party/golioth-firmware-sdk/port/esp_idf/compone
 list(APPEND EXTRA_COMPONENT_DIRS ./third_party/arduino)
 list(APPEND EXTRA_COMPONENT_DIRS ./third_party/esp32-arduino-lib-builder/components/arduino_tinyusb)
 include($ENV{IDF_PATH}/tools/cmake/project.cmake)
-project(golioth_espidf_arduino)
+project(esp-air-quality-monitor)
