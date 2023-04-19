@@ -1,4 +1,4 @@
-name: Build with ESP-IDF
+name: Build & Deploy to Golioth
 
 on:
   push:
